@@ -1,0 +1,49 @@
+# Student task: complete all TODOs.
+# Keep service names unchanged.
+
+services:
+  backend:
+    image: busybox:1.36
+    command: ["sh", "-c", "echo backend started && sleep 3600"]
+    depends_on:
+      db:
+        # TODO 1: backend must wait until db is healthy
+        condition: service_started
+    networks:
+      - private
+
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_DB: app
+      # TODO 2: replace plain password with secret usage where possible (don't forget to add secrets)
+      POSTGRES_PASSWORD: insecure_password
+    # TODO 3: add a healthcheck with test command ["CMD-SHELL", "pg_isready -U app"]
+    volumes:
+      # TODO 4: replace with named volume postgres_data mounted to /var/lib/postgresql/data
+      - ./tmp-db:/var/lib/postgresql/data
+    networks:
+      - private
+
+  frontend:
+    image: nginx:alpine
+    # TODO 5: move frontend under profile "frontend"
+    networks:
+      - public
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    depends_on:
+      - db
+    # TODO 6: move debug service under profile "debug"
+    networks:
+      - public
+
+networks:
+  public:
+  # TODO 7: make private network internal
+  private:
+
+# TODO 8: define secret db_password from file ./secrets/db_password.txt
+# TODO 9: define named volume postgres_data

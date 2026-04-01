@@ -1,0 +1,10 @@
+# Student task: this file is an override for tests.
+
+services:
+  backend:
+    command: ["sh", "-c", "echo tests passed"]
+
+  db:
+    # TODO 10: replace with tmpfs for /var/lib/postgresql/data
+    volumes:
+      - ./tmp-db-test:/var/lib/postgresql/data

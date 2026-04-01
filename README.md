@@ -14,7 +14,6 @@ Complete all `TODO` items in:
 Run:
 
 ```bash
-cd docker_compose_quiz
 ./check_solution.sh
 ```
 
